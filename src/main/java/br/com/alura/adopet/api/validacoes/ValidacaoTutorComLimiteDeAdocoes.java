@@ -20,20 +20,12 @@ public class ValidacaoTutorComLimiteDeAdocoes implements ValidacaoSolicitacaoAdo
     @Autowired
     private AdocaoRepository adocaoRepository;
 
-    @Autowired
-    private TutorRepository tutorRepository;
-
     public void validar(SolicitacaoAdocaoDTO dto){
-        List<Adocao> adocoes = adocaoRepository.findAll();
-        Tutor tutor = tutorRepository.getReferenceById(dto.idTutor());
-        for (Adocao a : adocoes) {
-            int contador = 0;
-            if (a.getTutor() == tutor && a.getStatus() == StatusAdocao.APROVADO) {
-                contador = contador + 1;
-            }
-            if (contador == 5) {
-                throw new ValidacaoException("Tutor chegou ao limite máximo de 5 adoções!");
-            }
+        List<Adocao> limiteDeCincoAdocoesAprovada = adocaoRepository
+                .findByTutorIdAndStatus(dto.idTutor(), StatusAdocao.APROVADO);
+
+        if (limiteDeCincoAdocoesAprovada.size() >= 5) {
+            throw new ValidacaoException("Tutor chegou ao limite máximo de 5 adoções!");
         }
     }
 }
