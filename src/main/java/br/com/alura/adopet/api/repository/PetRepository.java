@@ -9,8 +9,6 @@ import java.util.Optional;
 
 public interface PetRepository extends JpaRepository<Pet, Long> {
 
-    boolean existsByPetIdAndAdotado(Long idPet);
-
     List<Pet> findAllByAdotadoFalse();
 
     List<Pet> findByAbrigo(Abrigo abrigo);

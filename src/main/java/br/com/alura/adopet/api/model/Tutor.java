@@ -43,7 +43,6 @@ public class Tutor {
         this.nome = dados.nome();
         this.telefone = dados.telefone();
         this.email = dados.email();
-        this.adocoes = dados.adocoes();
     }
 
 
